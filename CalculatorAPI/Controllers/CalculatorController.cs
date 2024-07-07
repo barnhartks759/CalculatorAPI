@@ -29,30 +29,25 @@ namespace CalculatorAPI.Controllers
 
         // POST api/<CalculatorController>
         [HttpPost]
-        public List<Operation> StoreLeft(double number, Guid guid)
+        public List<Operation> StoreLeft([FromBody] double number, Guid guid)
         {
             numberStore.Store(number, guid, Position.Left);
-            var options = calculator.Options(numberStore.Retrieve(guid));
-            return options;
+            return calculator.Options(numberStore.Retrieve(guid));
         }
 
-        //[HttpPost]
-        //public List<Operation> StoreRight([FromBody] double number, Guid guid)
-        //{
-        //    numberStore.Store(number, guid, Position.Right);
-        //    return calculator.Options(numberStore.Retrieve(guid));
-        //}
+        // POST api/<CalculatorController>/5
+        [HttpPost("{guid}")]
+        public List<Operation> StoreRight([FromBody] double number, Guid guid)
+        {
+            numberStore.Store(number, guid, Position.Right);
+            return calculator.Options(numberStore.Retrieve(guid));
+        }
 
-        //[HttpPost]
-        //public double? Calculate([FromBody] Operation operation, Guid guid)
-        //{
-        //    return calculator.Calculate(numberStore.Retrieve(guid), operation);
-        //}
-
-        //// PUT api/<CalculatorController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<CalculatorController>/5
+        [HttpPut("{guid}")]
+        public double? Calculate(Guid guid, [FromBody] Operation operation)
+        {
+            return calculator.Calculate(numberStore.Retrieve(guid), operation);
+        }
     }
 }

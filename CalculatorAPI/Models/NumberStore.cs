@@ -5,7 +5,7 @@ namespace CalculatorAPI.Models
 {
     public class NumberStore : INumberStore
     {
-        private Dictionary<Guid, Numbers> numbersDict { get; set; } = new Dictionary<Guid, Numbers>();
+        private static Dictionary<Guid, Numbers> numbersDict { get; set; } = new Dictionary<Guid, Numbers>();
 
         /// <summary>
         /// 
@@ -43,20 +43,22 @@ namespace CalculatorAPI.Models
 
                 numbersDict.Add(guid, newnums);
             }
-
             // If the location already exists, update existing Numbers 
-            Numbers oldnums = numbersDict[guid];
-
-            if (position == Position.Left) 
-            { 
-                oldnums.LeftNumber = number; 
-            }
             else
             {
-                oldnums.RightNumber = number;
-            }
+                Numbers oldnums = numbersDict[guid];
 
-            numbersDict[guid] = oldnums;
+                if (position == Position.Left)
+                {
+                    oldnums.LeftNumber = number;
+                }
+                else
+                {
+                    oldnums.RightNumber = number;
+                }
+
+                numbersDict[guid] = oldnums;
+            }
 
         }
     }
