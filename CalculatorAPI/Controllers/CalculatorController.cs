@@ -47,7 +47,11 @@ namespace CalculatorAPI.Controllers
         [HttpPut("{guid}")]
         public double? Calculate(Guid guid, [FromBody] Operation operation)
         {
-            return calculator.Calculate(numberStore.Retrieve(guid), operation);
+            double? result = calculator.Calculate(numberStore.Retrieve(guid), operation);
+
+            numberStore.Clear(guid);
+
+            return result;
         }
     }
 }

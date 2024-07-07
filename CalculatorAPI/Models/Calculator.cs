@@ -14,22 +14,26 @@ namespace CalculatorAPI.Models
         /// <returns></returns>
         public double? Calculate(Numbers numbers, Operation operation)
         {
-            double? retVal = 0;
+            double? retVal = null;
 
-            switch (operation)
+            // only perform operation if neither number is null
+            if (numbers.RightNumber.HasValue && numbers.LeftNumber.HasValue)
             {
-                case Operation.Add: 
-                    retVal = numbers.LeftNumber + numbers.RightNumber;
-                    break;
-                case Operation.Subtract: 
-                    retVal = numbers.LeftNumber - numbers.RightNumber;
-                    break;
-                case Operation.Multiply: 
-                    retVal = numbers.LeftNumber * numbers.RightNumber;
-                    break;
-                case Operation.Divide: 
-                    retVal = numbers.LeftNumber / numbers.RightNumber;
-                    break;
+                switch (operation)
+                {
+                    case Operation.Add:
+                        retVal = numbers.LeftNumber + numbers.RightNumber;
+                        break;
+                    case Operation.Subtract:
+                        retVal = numbers.LeftNumber - numbers.RightNumber;
+                        break;
+                    case Operation.Multiply:
+                        retVal = numbers.LeftNumber * numbers.RightNumber;
+                        break;
+                    case Operation.Divide:
+                        retVal = numbers.LeftNumber / numbers.RightNumber;
+                        break;
+                }
             }
 
             return retVal;
