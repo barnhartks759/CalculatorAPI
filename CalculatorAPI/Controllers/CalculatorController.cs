@@ -29,7 +29,7 @@ namespace CalculatorAPI.Controllers
 
         // POST api/<CalculatorController>
         [HttpPost]
-        public List<Operation> StoreLeft([FromBody] double number, Guid guid)
+        public List<Operation> StoreLeft(Guid guid, double number)
         {
             numberStore.Store(number, guid, Position.Left);
             return calculator.Options(numberStore.Retrieve(guid));
@@ -37,7 +37,7 @@ namespace CalculatorAPI.Controllers
 
         // POST api/<CalculatorController>/5
         [HttpPost("{guid}")]
-        public List<Operation> StoreRight([FromBody] double number, Guid guid)
+        public List<Operation> StoreRight(Guid guid, double number)
         {
             numberStore.Store(number, guid, Position.Right);
             return calculator.Options(numberStore.Retrieve(guid));
@@ -45,10 +45,17 @@ namespace CalculatorAPI.Controllers
 
         // PUT api/<CalculatorController>/5
         [HttpPut("{guid}")]
-        public double? Calculate(Guid guid, [FromBody] Operation operation)
+        public double? Calculate(Guid guid, Operation operation)
         {
-            double? result = calculator.Calculate(numberStore.Retrieve(guid), operation);
+            double? result = null;
 
+            // only call calculate if the operation is not Clear
+            if (operation != Operation.Clear)
+            {
+                result = calculator.Calculate(numberStore.Retrieve(guid), operation);
+            }
+
+            // clean up numberStore after performing the operation
             numberStore.Clear(guid);
 
             return result;
