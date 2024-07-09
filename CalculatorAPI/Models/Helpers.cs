@@ -15,7 +15,7 @@
 
         public enum Operation
         {
-            Add, Subtract, Multiply, Divide
+            Add, Subtract, Multiply, Divide, Clear
         }
     }
 }
