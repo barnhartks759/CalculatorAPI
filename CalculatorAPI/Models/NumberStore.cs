@@ -8,7 +8,7 @@ namespace CalculatorAPI.Models
         private static Dictionary<Guid, Numbers> numbersDict { get; set; } = new Dictionary<Guid, Numbers>();
 
         /// <summary>
-        /// 
+        /// removes values from numbersDict for a given guid
         /// </summary>
         /// <param name="guid"></param>
         public void Clear(Guid guid)
@@ -17,17 +17,22 @@ namespace CalculatorAPI.Models
         }
 
         /// <summary>
-        /// 
+        /// returns the numbers from numbersDict for a given guid
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
         public Numbers Retrieve(Guid guid)
         {
-            return numbersDict[guid];
+            if (numbersDict.ContainsKey(guid))
+            {
+                return numbersDict[guid]; 
+            } else {
+                return new Numbers(); 
+            }
         }
 
         /// <summary>
-        /// 
+        /// adds the numbers to numberDict for a given guid
         /// </summary>
         /// <param name="number"></param>
         /// <param name="guid"></param>
